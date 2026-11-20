@@ -85,7 +85,6 @@ a:hover { text-decoration: underline; }
     position: relative;
     width: 100%;
     max-width: 700px;           /* ограничиваем ширину плеера */
-    padding-bottom: 56.25%;     /* пропорция 16:9 */
     height: 320px;
     overflow: hidden;
     border-radius: 14px;
