@@ -78,13 +78,23 @@ a:hover { text-decoration: underline; }
     justify-content: center;        /* центрирует содержимое внутри */
 }
 
-.video-wrapper iframe {
+.video-wrapper {
     position: relative;
-    margin: 0 auto;
+    width: 100%;
+    padding-bottom: 56.25%;   /* 16:9 */
+    margin: 0 auto;           /* на всякий случай */
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    display: block;
     border: 0;
+    object-fit: contain;    /* ← видео покажется ЦЕЛИКОМ, по центру, с полосами по краям */
+    background: #000;
 }
 
 .hero-slide {
