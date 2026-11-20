@@ -70,21 +70,27 @@ a:hover { text-decoration: underline; }
     height: 100%;
 }
 
+/* ===== ВИДЕО (по центру) ===== */
 .video-section {
-    max-width: 980px;               /* такая же ширина, как у блока «События» */
-    width: calc(100% - 48px);
-    margin: 0 auto 40px;            /* ← 0 сверху/снизу, auto — центрирует по горизонтали */
-    display: flex;
-    justify-content: center;        /* центрирует содержимое внутри */
+    display: flex;              /* включаем flex-центрирование */
+    justify-content: center;    /* центрируем по горизонтали */
+    align-items: center;
+    width: 100%;
+    margin: 0 0 40px 0;
+    padding: 0 24px;
+    box-sizing: border-box;
 }
 
 .video-wrapper {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%;   /* 16:9 */
-    margin: 0 auto;           /* на всякий случай */
+    max-width: 980px;           /* ограничиваем ширину плеера */
+    padding-bottom: 56.25%;     /* пропорция 16:9 */
+    height: 0;
     overflow: hidden;
     border-radius: 14px;
+    background: #000;
+    box-shadow: 0 12px 30px rgba(40, 20, 80, 0.35);
 }
 
 .video-wrapper iframe {
@@ -92,9 +98,14 @@ a:hover { text-decoration: underline; }
     inset: 0;
     width: 100%;
     height: 100%;
+    display: block;
     border: 0;
-    object-fit: contain;    /* ← видео покажется ЦЕЛИКОМ, по центру, с полосами по краям */
     background: #000;
+}
+
+@media (max-width: 760px) {
+    .video-section { padding: 0 16px; margin-bottom: 28px; }
+    .video-wrapper { border-radius: 10px; }
 }
 
 .hero-slide {
