@@ -84,7 +84,7 @@ a:hover { text-decoration: underline; }
 .video-wrapper {
     position: relative;
     width: 100%;
-    max-width: 980px;           /* ограничиваем ширину плеера */
+    max-width: 700px;           /* ограничиваем ширину плеера */
     padding-bottom: 56.25%;     /* пропорция 16:9 */
     height: 0;
     overflow: hidden;
