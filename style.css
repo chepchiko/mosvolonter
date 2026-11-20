@@ -70,6 +70,14 @@ a:hover { text-decoration: underline; }
     height: 100%;
 }
 
+.video-section {
+    max-width: 980px;               /* такая же ширина, как у блока «События» */
+    width: calc(100% - 48px);
+    margin: 0 auto 40px;            /* ← 0 сверху/снизу, auto — центрирует по горизонтали */
+    display: flex;
+    justify-content: center;        /* центрирует содержимое внутри */
+}
+
 .video-wrapper iframe {
     position: absolute;
     inset: 0;
