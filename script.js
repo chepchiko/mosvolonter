@@ -3,58 +3,42 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+/* ---------- Слайдер ---------- */
+const track   = document.getElementById('sliderTrack');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-    /* ---------- Плавная прокрутка ---------- */
-    const navAbout   = document.getElementById('nav-about');
-    const navEvents  = document.getElementById('nav-events');
-    const secAbout   = document.getElementById('about');
-    const secEvents  = document.getElementById('events');
-    if (navAbout && secAbout)   navAbout.addEventListener('click',  e => { e.preventDefault(); secAbout.scrollIntoView({behavior:'smooth'}); });
-    if (navEvents && secEvents) navEvents.addEventListener('click', e => { e.preventDefault(); secEvents.scrollIntoView({behavior:'smooth'}); });
+if (track && prevBtn && nextBtn) {
+    const slides = Array.from(track.children);
+    console.log('Слайдов найдено:', slides.length);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const track  = document.getElementById('sliderTrack');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    if (!track) return;
-
-    const slides = [...track.querySelectorAll('.hero-slide')];
-    const total = slides.length;
-    if (!total) return;
-
-    let index = 0;
-    let autoplayId = null;
+    let i = 0;
     const DELAY = 5000;
+    let autoplayId = null;
 
-    function go(i) {
-        slides[index].classList.remove('is-active');
-        index = (i + total) % total;
-        slides[index].classList.add('is-active');
+    function go(n) {
+        i = (n + slides.length) % slides.length;
+        track.style.transform = 'translateX(-' + (i * 100) + '%)';
+        console.log('→ слайд', i, 'transform =', track.style.transform);
     }
 
-    slides[0].classList.add('is-active');
-
-    prevBtn?.addEventListener('click', () => { go(index - 1); restart(); });
-    nextBtn?.addEventListener('click', () => { go(index + 1); restart(); });
-
     function start() {
-        if (total < 2) return;
-        autoplayId = setInterval(() => go(index + 1), DELAY);
+        if (slides.length < 2) return;
+        stop();
+        autoplayId = setInterval(() => go(i + 1), DELAY);
     }
     function stop() {
         if (autoplayId) clearInterval(autoplayId);
         autoplayId = null;
     }
-    function restart() { stop(); start(); }
 
-    const hero = track.closest('.hero');
-    hero?.addEventListener('mouseenter', stop);
-    hero?.addEventListener('mouseleave', start);
+    nextBtn.addEventListener('click', () => { go(i + 1); start(); });
+    prevBtn.addEventListener('click', () => { go(i - 1); start(); });
 
     start();
-});
-
-
+} else {
+    console.warn('Слайдер не найден', { track, prevBtn, nextBtn });
+}
     /* ---------- Маска даты ---------- */
     const birth = document.getElementById('birthDate');
     if (birth) birth.addEventListener('input', e => {
