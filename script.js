@@ -45,11 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     function restart() { stop(); start(); }
 
-    // пауза при наведении — чтобы не переключилось, пока смотрят
-    const hero = track.closest('.hero');
-    hero?.addEventListener('mouseenter', stop);
-    hero?.addEventListener('mouseleave', start);
-
     // свайп на телефоне
     let startX = null;
     hero?.addEventListener('touchstart', e => { startX = e.touches[0].clientX; stop(); }, {passive:true});
