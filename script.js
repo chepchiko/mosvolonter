@@ -12,17 +12,57 @@ document.addEventListener("DOMContentLoaded", function () {
     if (navAbout && secAbout)   navAbout.addEventListener('click',  e => { e.preventDefault(); secAbout.scrollIntoView({behavior:'smooth'}); });
     if (navEvents && secEvents) navEvents.addEventListener('click', e => { e.preventDefault(); secEvents.scrollIntoView({behavior:'smooth'}); });
 
-    /* ---------- Слайдер ---------- */
-    const track = document.getElementById('sliderTrack');
+   /* ===== Hero-слайдер: автопрокрутка + стрелки ===== */
+document.addEventListener('DOMContentLoaded', () => {
+    const track  = document.getElementById('sliderTrack');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    if (track && prevBtn && nextBtn) {
-        const slides = Array.from(track.children);
-        let i = 0;
-        const go = n => { track.style.transform = `translateX(-${n * 100}%)`; };
-        nextBtn.addEventListener('click', () => { i = (i + 1) % slides.length; go(i); });
-        prevBtn.addEventListener('click', () => { i = (i - 1 + slides.length) % slides.length; go(i); });
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.hero-slide');
+    const total = slides.length;
+    if (!total) return;
+
+    let index = 0;
+    let autoplayId = null;
+    const DELAY = 5000;           // ← 5 секунд между слайдами
+
+    function go(i) {
+        index = (i + total) % total;
+        track.style.transform = `translateX(-${index * 100}%)`;
     }
+
+    prevBtn?.addEventListener('click', () => { go(index - 1); restart(); });
+    nextBtn?.addEventListener('click', () => { go(index + 1); restart(); });
+
+    function start() {
+        if (total < 2) return;
+        autoplayId = setInterval(() => go(index + 1), DELAY);
+    }
+    function stop() {
+        if (autoplayId) clearInterval(autoplayId);
+        autoplayId = null;
+    }
+    function restart() { stop(); start(); }
+
+    // пауза при наведении — чтобы не переключилось, пока смотрят
+    const hero = track.closest('.hero');
+    hero?.addEventListener('mouseenter', stop);
+    hero?.addEventListener('mouseleave', start);
+
+    // свайп на телефоне
+    let startX = null;
+    hero?.addEventListener('touchstart', e => { startX = e.touches[0].clientX; stop(); }, {passive:true});
+    hero?.addEventListener('touchend', e => {
+        if (startX === null) return;
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+        startX = null;
+        start();
+    });
+
+    start();
+});
 
 
     /* ---------- Маска даты ---------- */
