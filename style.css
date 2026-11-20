@@ -70,22 +70,23 @@ a:hover { text-decoration: underline; }
     transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ===== ВИДЕО (по центру) ===== */
 .video-section {
-    display: flex;              /* включаем flex-центрирование */
-    justify-content: center;    /* центрируем по горизонтали */
+    display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 16px;
     width: 100%;
-    margin: 0 0 40px 0;
     padding: 0 24px;
+    margin: 0 0 40px 0;
     box-sizing: border-box;
 }
 
 .video-wrapper {
     position: relative;
     width: 100%;
-    max-width: 700px;           /* ограничиваем ширину плеера */
+    max-width: 700px;
     height: 320px;
+    margin: 0 auto;
     overflow: hidden;
     border-radius: 14px;
     background: #000;
